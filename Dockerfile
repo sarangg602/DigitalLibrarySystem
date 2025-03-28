@@ -7,8 +7,14 @@ WORKDIR /app
 # Copy Maven project files
 COPY . .
 
+# Grant execute permissions to Maven wrapper
+RUN chmod +x mvnw
+
 # Build the application
 RUN ./mvnw clean package -DskipTests
 
-# Set the JAR file path (update name if different)
+# Expose the port your app runs on (default for Spring Boot is 8080)
+EXPOSE 8080
+
+# Run the application
 CMD ["java", "-jar", "target/DigitalLibrarySystem-0.0.1-SNAPSHOT.jar"]
