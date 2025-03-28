@@ -1,14 +1,14 @@
-# Use a lightweight JDK base image
+# Use official Java 17 image
 FROM eclipse-temurin:17-jdk
 
-# Set working directory in the container
+# Set working directory
 WORKDIR /app
 
-# Copy the JAR file into the container
-COPY target/DigitalLibrarySystem-0.0.1-SNAPSHOT.jar app.jar
+# Copy Maven project files
+COPY . .
 
-# Expose the port your app runs on (default for Spring Boot is 8080)
-EXPOSE 8080
+# Build the application
+RUN ./mvnw clean package -DskipTests
 
-# Command to run the JAR file
-CMD ["java", "-jar", "app.jar"]
+# Set the JAR file path (update name if different)
+CMD ["java", "-jar", "target/DigitalLibrarySystem-0.0.1-SNAPSHOT.jar"]
